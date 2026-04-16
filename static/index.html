@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CUTnTag Antibody Table</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body class="min-h-screen bg-slate-100 p-4 text-sm">
+
+  <!-- Header -->
+  <header class="rounded-xl shadow-lg mb-4 px-6 py-4 flex items-center gap-4 bg-gradient-to-r from-indigo-600 via-purple-600 to-purple-700">
+    <div>
+      <h1 class="text-2xl font-bold text-white tracking-tight">CUTnTag Antibody Table</h1>
+      <p class="text-purple-200 text-xs mt-0.5">Build sample metadata tables for CUTnTag pipeline</p>
+    </div>
+    <span id="version-badge" class="ml-auto text-purple-300 text-xs"></span>
+  </header>
+
+  <div class="flex gap-4 items-start">
+
+    <!-- ── LEFT: File upload + Sample list ── -->
+    <div class="flex flex-col gap-3 w-64 flex-shrink-0">
+
+      <!-- File upload -->
+      <div class="card">
+        <p class="section-label">1. Load samples</p>
+        <div id="drop-zone"
+             class="border-2 border-dashed border-purple-300 rounded-lg p-5 text-center cursor-pointer transition
+                    hover:border-purple-500 hover:bg-purple-50">
+          <div class="text-purple-400 text-3xl mb-1">📂</div>
+          <p class="text-xs text-gray-500">
+            Drop a <code class="bg-gray-100 rounded px-1">.txt</code> file here<br>
+            or <span class="text-purple-600 font-semibold">click to browse</span>
+          </p>
+          <input id="file-input" type="file" accept=".txt,.tsv,.csv" class="hidden" />
+        </div>
+        <p class="text-xs text-gray-400 mt-1.5 italic">One sample name per line</p>
+      </div>
+
+      <!-- Sample list -->
+      <div class="card flex flex-col">
+        <p class="section-label">Select samples to group:</p>
+        <div id="sample-list" class="listbox" style="height:320px;">
+          <p class="text-xs text-gray-300 italic p-2">Load a file to see samples</p>
+        </div>
+        <p class="hint">Ctrl/Shift+click for multiple &middot; assigned samples hidden</p>
+      </div>
+
+    </div>
+
+    <!-- ── MIDDLE: Controls ── -->
+    <div class="flex flex-col gap-3 w-60 flex-shrink-0">
+
+      <!-- Project ID -->
+      <div class="card">
+        <p class="section-label">Project ID <span class="font-normal normal-case text-gray-400">(optional)</span></p>
+        <input id="project-id" type="text" class="text-input" placeholder="e.g. MyProject2024" />
+      </div>
+
+      <!-- Species -->
+      <div class="card">
+        <p class="section-label">2. Species</p>
+        <div id="species-radios" class="flex flex-col gap-1 overflow-y-auto" style="max-height:12rem;">
+          <p class="text-xs text-gray-300 italic">Loading…</p>
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div class="card">
+        <p class="section-label">3. Type</p>
+        <div class="flex gap-6">
+          <label class="flex items-center gap-2 cursor-pointer text-gray-700">
+            <input type="radio" name="type" value="assay" class="accent-purple-600" checked />
+            Assay
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer text-gray-700">
+            <input type="radio" name="type" value="background" class="accent-purple-600" />
+            Background
+          </label>
+        </div>
+      </div>
+
+      <!-- Group name -->
+      <div class="card">
+        <p class="section-label">4. Group name</p>
+        <input id="group-name" type="text" class="text-input" placeholder="e.g. HEK293_H3K27me3" />
+        <p id="group-name-error" class="text-xs text-red-500 mt-1 hidden">Group name already used</p>
+      </div>
+
+      <!-- Background groups -->
+      <div class="card">
+        <p class="section-label">5. Background groups <span class="font-normal normal-case text-gray-400">(optional)</span></p>
+        <div id="bg-group-list" class="listbox" style="height:96px;">
+          <p class="text-xs text-gray-300 italic p-1">No background groups yet</p>
+        </div>
+        <p class="hint">Click to link &middot; click again to deselect</p>
+      </div>
+
+      <!-- Save group -->
+      <button id="save-btn"
+        class="rounded-lg py-2 px-4 font-semibold text-white shadow transition text-sm
+               bg-gradient-to-r from-indigo-600 via-purple-600 to-purple-700
+               hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+        disabled>
+        Save group
+      </button>
+
+      <!-- Defined groups -->
+      <div class="card">
+        <p class="section-label">Select group to edit</p>
+        <div id="defined-groups-list" class="listbox" style="height:128px;">
+          <p class="text-xs text-gray-300 italic p-1">No groups yet</p>
+        </div>
+        <p class="hint">Click a group to edit it</p>
+      </div>
+
+      <!-- Download -->
+      <button id="download-btn"
+        class="rounded-lg py-2 px-4 font-semibold text-white shadow transition text-sm
+               bg-green-600 hover:bg-green-700 disabled:opacity-40 disabled:cursor-not-allowed"
+        disabled>
+        ⬇ Download .tsv
+      </button>
+      <p id="download-hint" class="text-xs text-gray-400 text-center -mt-2 hidden">
+        Enabled when all samples are assigned
+      </p>
+
+    </div>
+
+    <!-- ── RIGHT: Main table ── -->
+    <div class="card flex-1 flex flex-col min-w-0" style="min-height:420px;">
+      <p class="section-label">Sample metadata table (preview)</p>
+      <div class="overflow-auto flex-1 rounded border border-gray-200">
+        <table class="w-full text-xs border-collapse">
+          <thead>
+            <tr class="bg-gradient-to-r from-indigo-600 via-purple-600 to-purple-700 text-white sticky top-0">
+              <th class="text-left px-3 py-2 font-semibold whitespace-nowrap">sample_name</th>
+              <th class="text-left px-3 py-2 font-semibold whitespace-nowrap">species</th>
+              <th class="text-left px-3 py-2 font-semibold whitespace-nowrap">type</th>
+              <th class="text-left px-3 py-2 font-semibold whitespace-nowrap">group</th>
+              <th class="text-left px-3 py-2 font-semibold whitespace-nowrap">background</th>
+            </tr>
+          </thead>
+          <tbody id="main-table-body">
+            <tr>
+              <td colspan="5" class="px-3 py-6 text-center text-gray-300 italic">
+                Saved groups will appear here
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div id="table-stats" class="mt-2 text-xs text-gray-400"></div>
+    </div>
+
+  </div>
+
+  <!-- Messages -->
+  <div class="card mt-3">
+    <p class="section-label">Messages</p>
+    <div id="messages"
+         class="border border-gray-200 rounded bg-gray-50 overflow-y-auto p-2 text-xs font-mono text-gray-600"
+         style="height:72px;">
+    </div>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+/* ── Utility classes ─────────────────────────────────────────────────────── */
+
+.section-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.hint {
+  font-size: 0.7rem;
+  color: #9ca3af;
+  margin-top: 4px;
+}
+
+.card {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  padding: 0.75rem;
+}
+
+.text-input {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  padding: 6px 8px;
+  font-size: 0.875rem;
+  outline: none;
+  background: white;
+  color: #111827;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.text-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 2px rgba(124,58,237,0.25);
+}
+
+/* ── Listboxes ───────────────────────────────────────────────────────────── */
+
+/*
+  overflow: auto  → scrollbars appear in both axes only when content overflows.
+  Items use white-space: nowrap so long sample names trigger a horizontal
+  scrollbar rather than wrapping and compressing the list.
+*/
+.listbox {
+  border: 1px solid #e5e7eb;
+  border-radius: 0.375rem;
+  background: #f9fafb;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 4px;
+}
+
+/* ── Sample items ────────────────────────────────────────────────────────── */
+
+.sample-item {
+  padding: 2px 6px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 0.72rem;
+  font-family: monospace;
+  white-space: nowrap;
+  user-select: none;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.sample-item:hover {
+  background: #ede9fe;
+}
+
+.sample-item.selected {
+  background: #6d28d9;
+  color: white;
+}
+
+/* ── Group rows ──────────────────────────────────────────────────────────── */
+
+.group-row {
+  padding: 3px 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+  user-select: none;
+  color: #374151;
+  flex-shrink: 0;
+}
+
+.group-row:hover {
+  background: #ede9fe;
+}
+
+.group-row.selected {
+  background: #6d28d9;
+  color: white;
+}
+
+/* ── Main table row colors (5 cycling pastels) ───────────────────────────── */
+
+.group-color-0 { background-color: #ede9fe; }
+.group-color-1 { background-color: #dbeafe; }
+.group-color-2 { background-color: #dcfce7; }
+.group-color-3 { background-color: #fef9c3; }
+.group-color-4 { background-color: #ffe4e6; }

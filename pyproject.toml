@@ -1,0 +1,30 @@
+[project]
+name = "cutntag-antibody-table"
+version = "0.2.0"
+description = "Browser-based tool to build CUTnTag sample metadata tables"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.135.3",
+    "pydantic>=2.13.1",
+    "python-multipart>=0.0.26",
+    "pyyaml>=6.0.3",
+    "uvicorn[standard]>=0.44.0",
+]
+
+[dependency-groups]
+dev = [
+    "httpx>=0.28.1",
+    "pytest>=9.0.3",
+    "pytest-asyncio>=1.3.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[project.scripts]
+cutntagtable = "cutntagtable.main:app"
+
+[tool.uv]
+package = true
+
+[tool.uv.sources]

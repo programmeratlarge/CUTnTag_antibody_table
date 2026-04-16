@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CUTnTag Antibody Table – UI Mockup</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f1f5f9; }
+  .sample-item { padding: 2px 6px; cursor: pointer; border-radius: 2px; font-size: 0.72rem; font-family: monospace; }
+  .sample-item.selected { background: #6d28d9; color: white; }
+  .sample-item.assigned { display: none; }
+  .group-row { padding: 3px 8px; cursor: pointer; border-radius: 2px; font-size: 0.8rem; }
+  .group-row.selected { background: #6d28d9; color: white; }
+  .table-row-color-0 { background: #ede9fe; }
+  .table-row-color-1 { background: #dbeafe; }
+  .table-row-color-2 { background: #dcfce7; }
+  .table-row-color-3 { background: #fef9c3; }
+  .table-row-color-4 { background: #ffe4e6; }
+  .disabled { opacity: 0.4; pointer-events: none; }
+  .header-gradient { background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #6d28d9 100%); }
+  .section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #6b7280; margin-bottom: 4px; }
+</style>
+</head>
+<body class="min-h-screen p-4">
+
+<!-- Header -->
+<div class="header-gradient rounded-xl shadow-lg mb-4 px-6 py-4 flex items-center gap-4">
+  <div>
+    <h1 class="text-2xl font-bold text-white tracking-tight">CUTnTag Antibody Table</h1>
+    <p class="text-purple-200 text-sm">Build sample metadata tables for CUTnTag pipeline</p>
+  </div>
+  <div class="ml-auto text-purple-300 text-xs">v0.2.0</div>
+</div>
+
+<div class="flex gap-4">
+
+  <!-- LEFT COLUMN: File Upload + Sample List -->
+  <div class="flex flex-col gap-3 w-64 flex-shrink-0">
+
+    <!-- File Upload -->
+    <div class="bg-white rounded-lg shadow p-3">
+      <div class="section-label">1. Load samples</div>
+      <div class="border-2 border-dashed border-purple-300 rounded-lg p-4 text-center cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition">
+        <div class="text-purple-400 text-2xl mb-1">📂</div>
+        <div class="text-xs text-gray-500">Drop a .txt file here<br>or <span class="text-purple-600 font-semibold">click to browse</span></div>
+      </div>
+      <div class="mt-2 text-xs text-gray-400 italic">Accepts: .txt (one sample per line)</div>
+    </div>
+
+    <!-- Sample list -->
+    <div class="bg-white rounded-lg shadow p-3 flex flex-col flex-1">
+      <div class="section-label">Select samples to group:</div>
+      <div class="border border-gray-200 rounded overflow-y-auto h-64 bg-gray-50 p-1 flex flex-col gap-0.5">
+        <div class="sample-item selected">A1_HEK293A_H3K27me3_…_L2</div>
+        <div class="sample-item selected">A2_HEK293B_H3K27me3_…_L2</div>
+        <div class="sample-item">A3_mCD8A_H3K27me3_…_L2</div>
+        <div class="sample-item">A4_mCD8B_H3K27me3_…_L2</div>
+        <div class="sample-item">A5_hCD8A_H3K27me3_…_L2</div>
+        <div class="sample-item">A6_hCD8B_H3K27me3_…_L2</div>
+        <div class="sample-item">B1_HEK293A_H3K4me1_…_L2</div>
+        <div class="sample-item">B2_HEK293B_H3K4me1_…_L2</div>
+        <div class="sample-item">B3_mCD8A_H3K4me1_…_L2</div>
+        <div class="sample-item">B4_mCD8B_H3K4me1_…_L2</div>
+        <div class="sample-item">B5_hCD8A_H3K4me1_…_L2</div>
+        <div class="sample-item">B6_hCD8B_H3K4me1_…_L2</div>
+        <div class="sample-item assigned">E1_HEK293A_Ig…_L2</div>
+        <div class="sample-item assigned">E2_HEK293B_Ig…_L2</div>
+      </div>
+      <div class="text-xs text-gray-400 mt-1">Ctrl+click to select multiple · assigned samples hidden</div>
+    </div>
+  </div>
+
+  <!-- MIDDLE COLUMN: Controls -->
+  <div class="flex flex-col gap-3 w-56 flex-shrink-0">
+
+    <!-- Species -->
+    <div class="bg-white rounded-lg shadow p-3">
+      <div class="section-label">2. Species</div>
+      <div class="flex flex-col gap-1">
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600" checked> Human
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600"> Mouse
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600"> Fly
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600"> Arabidopsis
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600"> Escherichia coli
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600"> Bos taurus
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="species" class="accent-purple-600"> Horse
+        </label>
+      </div>
+    </div>
+
+    <!-- Type -->
+    <div class="bg-white rounded-lg shadow p-3">
+      <div class="section-label">3. Type</div>
+      <div class="flex gap-4">
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="type" class="accent-purple-600" checked> Assay
+        </label>
+        <label class="flex items-center gap-2 text-sm cursor-pointer">
+          <input type="radio" name="type" class="accent-purple-600"> Background
+        </label>
+      </div>
+    </div>
+
+    <!-- Group Name -->
+    <div class="bg-white rounded-lg shadow p-3">
+      <div class="section-label">4. Group name</div>
+      <input type="text"
+        class="w-full border border-gray-300 rounded px-2 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-purple-400"
+        placeholder="e.g. HEK293_H3K27me3"
+        value="HEK293_H3K27me3">
+      <div class="text-xs text-red-500 mt-1 hidden">Group name already used</div>
+    </div>
+
+    <!-- Background groups -->
+    <div class="bg-white rounded-lg shadow p-3 flex flex-col">
+      <div class="section-label">5. Background groups</div>
+      <div class="border border-gray-200 rounded overflow-y-auto h-24 bg-gray-50 p-1 flex flex-col gap-0.5">
+        <div class="group-row selected">HEK293_Ig23GVWTLT3</div>
+        <div class="group-row">mCD8_Ig23GVWTLT3</div>
+        <div class="group-row">hCD8_Ig23GVWTLT3</div>
+      </div>
+      <div class="text-xs text-gray-400 mt-1">Click to link background (optional)</div>
+    </div>
+
+    <!-- Save Group button -->
+    <button class="header-gradient text-white font-semibold rounded-lg py-2 px-4 shadow hover:opacity-90 transition text-sm">
+      Save group
+    </button>
+
+    <!-- Defined groups -->
+    <div class="bg-white rounded-lg shadow p-3 flex flex-col">
+      <div class="section-label">Select group to edit</div>
+      <div class="border border-gray-200 rounded overflow-y-auto h-36 bg-gray-50 p-1 flex flex-col gap-0.5">
+        <div class="group-row">HEK293_Ig23GVWTLT3 <span class="text-gray-400 text-xs">(bg)</span></div>
+        <div class="group-row">mCD8_Ig23GVWTLT3 <span class="text-gray-400 text-xs">(bg)</span></div>
+        <div class="group-row">hCD8_Ig23GVWTLT3 <span class="text-gray-400 text-xs">(bg)</span></div>
+        <div class="group-row selected">HEK293_H3K27me3</div>
+        <div class="group-row">mCD8_H3K27me3</div>
+      </div>
+      <div class="text-xs text-gray-400 mt-1">Click a group to edit it</div>
+    </div>
+
+    <!-- Download -->
+    <button class="disabled bg-green-600 text-white font-semibold rounded-lg py-2 px-4 shadow hover:bg-green-700 transition text-sm">
+      ⬇ Download .tsv
+    </button>
+    <div class="text-xs text-gray-400 text-center -mt-2">Enabled when all samples are assigned</div>
+
+  </div>
+
+  <!-- RIGHT COLUMN: Main table -->
+  <div class="flex-1 bg-white rounded-lg shadow p-3 flex flex-col min-w-0">
+    <div class="section-label">Sample metadata table (preview)</div>
+    <div class="overflow-x-auto overflow-y-auto flex-1">
+      <table class="w-full text-xs border-collapse">
+        <thead>
+          <tr class="header-gradient text-white">
+            <th class="text-left px-3 py-2 rounded-tl font-semibold">sample_name</th>
+            <th class="text-left px-3 py-2 font-semibold">species</th>
+            <th class="text-left px-3 py-2 font-semibold">type</th>
+            <th class="text-left px-3 py-2 font-semibold">group</th>
+            <th class="text-left px-3 py-2 rounded-tr font-semibold">background</th>
+          </tr>
+        </thead>
+        <tbody class="font-mono">
+          <!-- Group: HEK293_Ig23GVWTLT3 (background) — color 0 -->
+          <tr class="table-row-color-0"><td class="px-3 py-1">E1_HEK293A_Ig23GVWTLT3_L2</td><td class="px-3 py-1">hg38</td><td class="px-3 py-1">background</td><td class="px-3 py-1">HEK293_Ig23GVWTLT3</td><td class="px-3 py-1"></td></tr>
+          <tr class="table-row-color-0"><td class="px-3 py-1">E2_HEK293B_Ig23GVWTLT3_L2</td><td class="px-3 py-1">hg38</td><td class="px-3 py-1">background</td><td class="px-3 py-1">HEK293_Ig23GVWTLT3</td><td class="px-3 py-1"></td></tr>
+          <!-- Group: HEK293_H3K27me3 (assay) — color 1 -->
+          <tr class="table-row-color-1"><td class="px-3 py-1">A1_HEK293A_H3K27me3_…_L2</td><td class="px-3 py-1">hg38</td><td class="px-3 py-1">assay</td><td class="px-3 py-1">HEK293_H3K27me3</td><td class="px-3 py-1">HEK293_Ig23GVWTLT3</td></tr>
+          <tr class="table-row-color-1"><td class="px-3 py-1">A2_HEK293B_H3K27me3_…_L2</td><td class="px-3 py-1">hg38</td><td class="px-3 py-1">assay</td><td class="px-3 py-1">HEK293_H3K27me3</td><td class="px-3 py-1">HEK293_Ig23GVWTLT3</td></tr>
+          <!-- Group: mCD8_Ig23GVWTLT3 (background) — color 2 -->
+          <tr class="table-row-color-2"><td class="px-3 py-1">E3_mCD8A_Ig23GVWTLT3_L2</td><td class="px-3 py-1">mm10</td><td class="px-3 py-1">background</td><td class="px-3 py-1">mCD8_Ig23GVWTLT3</td><td class="px-3 py-1"></td></tr>
+          <tr class="table-row-color-2"><td class="px-3 py-1">E4_mCD8B_Ig23GVWTLT3_L2</td><td class="px-3 py-1">mm10</td><td class="px-3 py-1">background</td><td class="px-3 py-1">mCD8_Ig23GVWTLT3</td><td class="px-3 py-1"></td></tr>
+          <!-- Group: mCD8_H3K27me3 (assay) — color 3 -->
+          <tr class="table-row-color-3"><td class="px-3 py-1">A3_mCD8A_H3K27me3_…_L2</td><td class="px-3 py-1">mm10</td><td class="px-3 py-1">assay</td><td class="px-3 py-1">mCD8_H3K27me3</td><td class="px-3 py-1">mCD8_Ig23GVWTLT3</td></tr>
+          <tr class="table-row-color-3"><td class="px-3 py-1">A4_mCD8B_H3K27me3_…_L2</td><td class="px-3 py-1">mm10</td><td class="px-3 py-1">assay</td><td class="px-3 py-1">mCD8_H3K27me3</td><td class="px-3 py-1">mCD8_Ig23GVWTLT3</td></tr>
+          <!-- placeholder rows -->
+          <tr class="border-t border-dashed border-gray-300">
+            <td colspan="5" class="px-3 py-2 text-gray-300 italic text-center">… remaining groups will appear here as saved …</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="mt-2 flex gap-4 text-xs text-gray-400">
+      <span>5 groups defined</span>
+      <span>·</span>
+      <span>16 / 30 samples assigned</span>
+      <span>·</span>
+      <span>Rows sorted by group, then sample name</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- Messages / validation area -->
+<div class="mt-3 bg-white rounded-lg shadow p-3">
+  <div class="section-label">Messages</div>
+  <div class="border border-gray-200 rounded bg-gray-50 h-14 overflow-y-auto p-2 text-xs text-gray-500 font-mono">
+    <span class="text-green-600">✓</span> Loaded 30 samples from sample_list.txt<br>
+    <span class="text-yellow-600">⚠</span> Group "HEK293_H3K27me3" saved with 2 samples (Human / Assay)
+  </div>
+</div>
+
+<!-- Legend -->
+<div class="mt-3 text-xs text-gray-400 text-center">
+  UI Mockup · CUTnTag Antibody Table v0.2.0 · Colors cycle per group for easy visual distinction
+</div>
+
+</body>
+</html>
