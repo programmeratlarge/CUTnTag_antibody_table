@@ -5,8 +5,14 @@ HEADER = ["sample_name", "species", "type", "group", "background"]
 
 def parse_samples(content: bytes) -> list[str]:
     text = content.decode("utf-8", errors="replace")
-    names = [line.strip() for line in text.splitlines()]
-    return [n for n in names if n]
+    names = []
+    for line in text.splitlines():
+        parts = line.split("\t")
+        if len(parts) >= 2:
+            name = parts[1].strip()
+            if name:
+                names.append(name)
+    return names
 
 
 def export_to_tsv(rows: list[TableRow]) -> str:

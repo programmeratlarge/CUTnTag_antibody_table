@@ -4,7 +4,8 @@
       "Bash(uv init *)",
       "Bash(uv add *)",
       "Bash(uv sync *)",
-      "Bash(uv run *)"
+      "Bash(uv run *)",
+      "Bash(.venv/Scripts/python.exe -m pytest tests/ -v)"
     ]
   }
 }

@@ -183,6 +183,15 @@ function renderBgGroups() {
   el.querySelectorAll(".group-row").forEach(row => {
     row.addEventListener("click", () => {
       state.selectedBg = state.selectedBg === row.dataset.name ? null : row.dataset.name;
+
+      if (state.selectedBg) {
+        const selectedSpecies = document.querySelector('input[name="species"]:checked')?.value;
+        const bgGroup = state.groups.find(g => g.name === state.selectedBg);
+        if (selectedSpecies && bgGroup && bgGroup.species !== selectedSpecies) {
+          logMessage("warning", `Species mismatch: assay group is "${selectedSpecies}" but background group "${bgGroup.name}" is "${bgGroup.species}"`);
+        }
+      }
+
       renderBgGroups();
     });
   });
@@ -422,8 +431,9 @@ function logMessage(level, text) {
   const colors = { ok: "text-green-600", error: "text-red-600", info: "text-blue-600", warning: "text-yellow-600" };
   const icon = icons[level] || "·";
   const color = colors[level] || "";
+  const textStyle = level === "warning" ? "text-red-600 font-bold" : "";
   const line = document.createElement("div");
-  line.innerHTML = `<span class="${color} font-bold">${icon}</span> ${escHtml(text)}`;
+  line.innerHTML = `<span class="${color} font-bold">${icon}</span> <span class="${textStyle}">${escHtml(text)}</span>`;
   el.appendChild(line);
   el.scrollTop = el.scrollHeight;
 }

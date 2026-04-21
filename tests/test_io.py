@@ -13,12 +13,12 @@ def test_parse_samples_basic():
 
 
 def test_parse_samples_strips_blank_lines():
-    content = b"SampleA\n\nSampleB\n\n"
+    content = b"1\tSampleA\n\n2\tSampleB\n\n"
     assert parse_samples(content) == ["SampleA", "SampleB"]
 
 
 def test_parse_samples_strips_whitespace():
-    content = b"  SampleA  \n  SampleB\t\n"
+    content = b"1\t  SampleA  \n2\t  SampleB  \n"
     assert parse_samples(content) == ["SampleA", "SampleB"]
 
 

@@ -10,7 +10,7 @@ from .io import parse_samples, export_to_tsv
 from .models import ExportRequest
 from .validation import validate_samples
 
-APP_VERSION = "0.2.0"
+APP_VERSION = "0.2.1"
 STATIC_DIR = Path(__file__).parent.parent.parent / "static"
 
 app = FastAPI(title="CUTnTag Antibody Table", version=APP_VERSION)

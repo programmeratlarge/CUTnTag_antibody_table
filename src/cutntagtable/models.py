@@ -5,7 +5,7 @@ from typing import Literal
 class TableRow(BaseModel):
     sample_name: str
     species: str       # reference genome string e.g. "hg38"
-    type: Literal["assay", "background"]
+    type: Literal["assay", "background", "ignore"]
     group: str
     background: str    # empty string if none
 

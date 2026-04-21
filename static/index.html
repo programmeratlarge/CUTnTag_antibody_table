@@ -36,7 +36,7 @@
           </p>
           <input id="file-input" type="file" accept=".txt,.tsv,.csv" class="hidden" />
         </div>
-        <p class="text-xs text-gray-400 mt-1.5 italic">One sample name per line</p>
+        <p class="text-xs text-gray-400 mt-1.5 italic">Two-column tab-delimited file &middot; sample names in column 2</p>
       </div>
 
       <!-- Sample list -->
@@ -70,14 +70,20 @@
       <!-- Type -->
       <div class="card">
         <p class="section-label">3. Type</p>
-        <div class="flex gap-6">
+        <div class="flex flex-col gap-1">
+          <div class="flex gap-6">
+            <label class="flex items-center gap-2 cursor-pointer text-gray-700">
+              <input type="radio" name="type" value="assay" class="accent-purple-600" checked />
+              Assay
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-gray-700">
+              <input type="radio" name="type" value="background" class="accent-purple-600" />
+              Background
+            </label>
+          </div>
           <label class="flex items-center gap-2 cursor-pointer text-gray-700">
-            <input type="radio" name="type" value="assay" class="accent-purple-600" checked />
-            Assay
-          </label>
-          <label class="flex items-center gap-2 cursor-pointer text-gray-700">
-            <input type="radio" name="type" value="background" class="accent-purple-600" />
-            Background
+            <input type="radio" name="type" value="ignore" class="accent-purple-600" />
+            Ignore
           </label>
         </div>
       </div>

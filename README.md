@@ -1,6 +1,6 @@
 ![CUTnTag antibody table](./header_image.png)
 
-# CUTnTag_antibody_table
+# CUTnTag antibody table
 Build a table of samples, grouped by species and antibody, for CUTnTag pipeline
 
 ## Live App
@@ -35,15 +35,15 @@ uv run uvicorn cutntagtable.main:app --reload --port 7862
 ### 1. Load your sample list
 
 Drag and drop a plain-text file onto the upload area, or click **click to browse** to select one.
-The file should contain one sample name per line with no header row.
+The file must be two-column and tab-delimited with no header row. The first column is ignored; sample names are read from the second column. This text input file can be found in the project directory under `/local/Illumina/DRV/` and is typically named `2nd-rename-<order-ID>.txt`.
 
-Example input:
+Example sample names from 2nd column of input file:
 
 ```
-A1_HEK293A_H3K27me3_10486710_23GVWTLT3_L2
-A2_HEK293B_H3K27me3_10486710_23GVWTLT3_L2
-E1_HEK293A_Ig23GVWTLT3_L2
-E2_HEK293B_Ig23GVWTLT3_L2
+1	A1_HEK293A_H3K27me3_10486710_23GVWTLT3_L2
+2	A2_HEK293B_H3K27me3_10486710_23GVWTLT3_L2
+3	E1_HEK293A_Ig23GVWTLT3_L2
+4	E2_HEK293B_Ig23GVWTLT3_L2
 ```
 
 Once loaded, all sample names appear in the **Select samples to group** list.
@@ -204,5 +204,6 @@ All application state (loaded samples, defined groups, assignments) lives in the
 
 | Version | Date | Description |
 |--------:|------|-------------|
+| v0.2.1 | 2026-04-21 | Add Ignore sample type; fix export validation error for Ignore type; species mismatch warning; two-column input file format |
 | v0.2.0 | 2026-04-16 | Full implementation: FastAPI backend, vanilla JS UI, sample grouping workflow, TSV export, Docker support, test suite |
 | v0.1.0 | 2026-04-15 | Initial commit |
